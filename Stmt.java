@@ -10,7 +10,7 @@ public class Stmt {
     In in;
     Out out;
     Decl decl;
-
+    Funccall funccall;
     Stmt() {
         option = 0;
         assign = null;
@@ -19,6 +19,7 @@ public class Stmt {
         in = null;
         out = null;
         decl = null;
+        funccall = null;
     }
 
     public void parse(Scanner S) {
@@ -58,6 +59,13 @@ public class Stmt {
             decl = new Decl();
             decl.parse(S);
         }
+        // Option 6: <stmt> ::= <func-call>
+        else if(S.currentToken() == Core.BEGIN){
+            option = 7;
+            funccall = new Funccall();
+            funccall.parse(S);
+
+        }
         // <assign> ::= id = <expr> ; | id = new ; | id = ref id ;
         // <if> ::= if <cond> then <stmt-seq> endif | if <cond> then <stmt-seq> else
         // <stmt-seq> endif
@@ -68,9 +76,7 @@ public class Stmt {
         // So if the current token != id or if or while or input or output or int/ref,
         // then syntax error
         else {
-            // System.out.println("SHOULD BE ENDIF"+S.tokens);
-            Core[] expectedones = new Core[] { Core.ID, Core.IF, Core.WHILE, Core.INPUT, Core.OUTPUT, Core.INT,
-                    Core.REF };
+            Core[] expectedones = new Core[] { Core.ID, Core.IF, Core.WHILE, Core.INPUT, Core.OUTPUT, Core.INT, Core.REF, Core.BEGIN };
             Utility.errorhelper(expectedones, S.currentToken());
             System.exit(-1);
         }

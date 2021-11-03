@@ -6,24 +6,45 @@ public class DeclSeq {
 
     Decl decl;
     DeclSeq declseq;
+    Funcdecl funcdecl;
+
 
     DeclSeq() {
         option = 0;
         decl = null;
         declseq = null;
+        funcdecl = null;
     }
 
     public void parse(Scanner S) {
+        // If the first token is int/ref, option = 1/2
         // Option 1: <decl-seq> ::= <decl>
-        option = 1;
-        decl = new Decl();
-        decl.parse(S);
         // Option 2: <decl-seq> ::= <decl><decl-seq>
-        // If the current token != Core.BEGIN, continue parsing declseq.
         if (S.currentToken() == Core.INT || S.currentToken() == Core.REF) {
-            option = 2;
-            declseq = new DeclSeq();
-            declseq.parse(S);
+            option = 1;
+            decl = new Decl();
+            decl.parse(S);
+            if (S.currentToken() != Core.BEGIN){
+                option = 2;
+                declseq = new DeclSeq();
+                declseq.parse(S);
+            }
+        }
+        // Option 3: <decl-seq> ::= <func-decl>
+        // Option 4: <decl-seq> ::= <func-decl><decl-seq>
+        else if (S.currentToken() == Core.ID) {
+            option = 3;
+            funcdecl = new Funcdecl();
+            funcdecl.parse(S);
+            if (S.currentToken() != Core.BEGIN){
+                option = 4;
+                declseq = new DeclSeq();
+                declseq.parse(S);
+            }
+        }else{
+            Core[] expectedones = new Core[] { Core.ID, Core.INT, Core.REF };
+            Utility.errorhelper(expectedones, S.currentToken());
+            System.exit(-1);
         }
     }
 

@@ -5,14 +5,11 @@ import jdk.jshell.execution.Util;
 public class IdList {
 
     int option;
-    String line;
     String id;
-
     IdList idlist;
 
     IdList() {
         option = 0;
-        line = "";
         id = "";
         idlist = null;
     }
