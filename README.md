@@ -78,69 +78,7 @@
     * Value: int --> the actual int value | ref --> the pointer
 
 ### Grammar classes:
-### Prog class
-* Contains scanner, parser and execute functions for the following grammar
-    * <prog> ::= program <decl-seq> begin <stmt-seq> end | program begin <stmt-seq> end
-### DeclSeq class
-* Contains scanner, parser and execute functions for the following grammar
-    * <decl-seq> ::= <decl> | <decl><decl-seq> | <func-decl> | <func-decl><decl-seq>
-### StmtSeq class
-* Contains scanner, parser and execute functions for the following grammar
-    * <stmt-seq> ::= <stmt> | <stmt><stmt-seq>
-### Decl class
-* Contains scanner, parser and execute functions for the following grammar
-    * <decl> ::= <decl-int> | <decl-class>
-### DeclInt class
-* Contains scanner, parser and execute functions for the following grammar
-    * <decl-int> ::= int <id-list> ;
-### Declclass class
-* Contains scanner, parser and execute functions for the following grammar
-    * <decl-class> ::= ref <id-list> ;
-### IdList class
-* Contains scanner, parser and execute functions for the following grammar
-    * <id-list> ::= id | id , <id-list>
-### Funcdecl class
-* Contains scanner, parser and execute functions for the following grammar
-    * <func-decl> ::= id ( ref <formals> ) begin <stmt-seq> endfunc
-### Formals class
-* Contains scanner, parser and execute functions for the following grammar
-    * <formals> ::= id | id , <formals>
-### Stmt class
-* Contains scanner, parser and execute functions for the following grammar
-    * <stmt> ::= <assign> | <if> | <loop> | <in> | <out> | <decl>
-### Funccall class
-* Contains scanner, parser and execute functions for the following grammar
-    * <func-call> ::= begin id ( <formals> ) ;
-### Assign class
-* Contains scanner, parser and execute functions for the following grammar
-    * <assign> ::= id = <expr> ; | id = new ; | id = ref id ;
-### In class
-* Contains scanner, parser and execute functions for the following grammar
-    * <in> ::= input id ;
-### Out class
-* Contains scanner, parser and execute functions for the following grammar
-    * <out> ::= output <expr> ;
-### If class
-* Contains scanner, parser and execute functions for the following grammar
-    * <if> ::= if <cond> then <stmt-seq> endif | if <cond> then <stmt-seq> else <stmt-seq> endif
-### Loop class
-* Contains scanner, parser and execute functions for the following grammar
-    * <loop> ::= while <cond> begin <stmt-seq> endwhile
-### Cond class
-* Contains scanner, parser and execute functions for the following grammar
-    * <cond> ::= <cmpr> | ! ( <cond> ) | <cmpr> or <cond>
-### Cmpr class
-* Contains scanner, parser and execute functions for the following grammar
-    * <cmpr> ::= <expr> == <expr> | <expr> < <expr> | <expr> <= <expr>
-### Expr class
-* Contains scanner, parser and execute functions for the following grammar
-    * <expr> ::= <term> | <term> + <expr> | <term> – <expr>
-### Term class
-* Contains scanner, parser and execute functions for the following grammar
-    * <term> ::= <factor> | <factor> * <term>
-### Factor class
-* Contains scanner, parser and execute functions for the following grammar
-    * <factor> ::= id | const | ( <expr> )
+![Core grammar](core_grammar.pdf)
 
 
 
