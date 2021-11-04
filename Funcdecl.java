@@ -1,13 +1,13 @@
 import java.util.*;
 
 public class Funcdecl {
-   
+
     String id;
     Formals formals;
     StmtSeq stmtseq;
     ArrayList<String> formalParameters;
 
-    Funcdecl(){
+    Funcdecl() {
         id = "";
         formals = null;
         stmtseq = null;
@@ -56,18 +56,18 @@ public class Funcdecl {
         // Check if there are duplicate parameter names.
         // If so out print duplicate formal parameter errors
         Set<String> parameters = new HashSet<String>(formalParameters);
-        if(parameters.size() < formalParameters.size()){
+        if (parameters.size() < formalParameters.size()) {
             Utility.FunctionParameterDoubleDeclarationError();
             System.exit(-1);
         }
     }
 
-    public StmtSeq getFunctionBody(){
+    public StmtSeq getFunctionBody() {
         return stmtseq;
     }
 
-    public void print(){
-        System.out.print(id+" ( ref ");
+    public void print() {
+        System.out.print(id + " ( ref ");
         formals.print();
         System.out.print(" ) begin ");
         stmtseq.print(0);

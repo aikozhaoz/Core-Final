@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Formals {
-    
+
     int option;
     String id;
     Formals formals;
@@ -34,14 +34,14 @@ public class Formals {
     // Adding all parameters to parameters[]
     public void execute(ArrayList<String> parameters) {
         parameters.add(id);
-        if (option == 2){
+        if (option == 2) {
             formals.execute(parameters);
         }
     }
 
-    public void print(){
+    public void print() {
         System.out.print(id);
-        if (option == 2){
+        if (option == 2) {
             System.out.print(", ");
             formals.print();
         }

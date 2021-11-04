@@ -20,7 +20,8 @@ public class StmtSeq {
         stmt.parse(S);
         // Option 2: <stmt-seq> ::= <stmt><stmt-seq>
         // If the current token != Core.END, continue parsing stmtseq.
-        Core[] expectedones = new Core[] { Core.ID, Core.IF, Core.WHILE, Core.INPUT, Core.OUTPUT, Core.INT, Core.REF, Core.BEGIN };
+        Core[] expectedones = new Core[] { Core.ID, Core.IF, Core.WHILE, Core.INPUT, Core.OUTPUT, Core.INT, Core.REF,
+                Core.BEGIN };
         if (Utility.checkIfTokenIsExpected(expectedones, S.currentToken())) {
             option = 2;
             stmtseq = new StmtSeq();

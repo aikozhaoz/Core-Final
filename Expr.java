@@ -48,7 +48,7 @@ public class Expr {
     public int execute() {
         int result = Integer.MIN_VALUE;
         int termnum = term.execute();
-        
+
         if (option == 1) {
             result = termnum;
         } else {

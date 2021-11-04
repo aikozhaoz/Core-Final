@@ -57,12 +57,14 @@ public class Utility {
 
     public static void UseUndeclaredFunctionError(String id) {
         System.out.println("Semantic Error! ");
-        System.out.println("The current function has not been declared yet! " + id);
+        System.out.println("The current function has not been declared yet! Function: " + id);
     }
 
-    public static void unmatchingFunctionParameter(String id){
+    public static void unmatchingFunctionParameter(String id) {
         System.out.println("Semantic Error! ");
-        System.out.println("The amount of actual parameters does not align with the amount of formal parameters for function: " + id);
+        System.out.println(
+                "The amount of actual parameters does not align with the amount of formal parameters for function: "
+                        + id);
     }
 
     public static void DeclaredTypeError(String id) {

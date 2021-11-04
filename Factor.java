@@ -86,11 +86,12 @@ public class Factor {
                     val = currentscope.get(key);
                 }
             }
-            // If the current id(variable) does not exist in neither current stack/global, it's not declared.
+            // If the current id(variable) does not exist in neither current stack/global,
+            // it's not declared.
             if (keyInGlobal) {
                 if (Memory.globalSpace.containsKey(key)) {
                     val = Memory.globalSpace.get(key);
-                }else{
+                } else {
                     Utility.UseUndeclaredIdError(key);
                     System.exit(-1);
                 }

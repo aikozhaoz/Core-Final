@@ -66,21 +66,23 @@ public class DeclSeq {
             decl.execute();
             declseq.execute();
         } else if (option == 3) {
-            // Check if function is already declared. If not then put the <funcName, funcdecl> onto functionDeclaration.
+            // Check if function is already declared. If not then put the <funcName,
+            // funcdecl> onto functionDeclaration.
             // Otherwise, duplicate function name error.
-            if (!Memory.functionDeclaration.containsKey(funcName)){
+            if (!Memory.functionDeclaration.containsKey(funcName)) {
                 Memory.functionDeclaration.put(funcName, funcdecl);
-            }else{
+            } else {
                 Utility.DoubleDeclarationError(funcName);
             }
             // Execute funcdecl to check if there is any duplicates in formal parameters.
             funcdecl.execute();
         } else if (option == 4) {
-            // Check if function is already declared. If not then put the <funcName, funcdecl> onto functionDeclaration.
+            // Check if function is already declared. If not then put the <funcName,
+            // funcdecl> onto functionDeclaration.
             // Otherwise, duplicate function name error.
-            if (!Memory.functionDeclaration.containsKey(funcName)){
+            if (!Memory.functionDeclaration.containsKey(funcName)) {
                 Memory.functionDeclaration.put(funcName, funcdecl);
-            }else{
+            } else {
                 Utility.DoubleDeclarationError(funcName);
             }
             // Execute funcdecl to check if there is any duplicates in formal parameters.
@@ -91,16 +93,15 @@ public class DeclSeq {
 
     public void print(int indent) {
         // System.out.println("print declseq"+option);
-        if(option == 1){
+        if (option == 1) {
             decl.print(indent);
-        }
-        else if (option == 2) {
+        } else if (option == 2) {
             decl.print(indent);
             declseq.print(indent);
-        }else if (option == 3) {
+        } else if (option == 3) {
             // System.out.print("option =3");
             funcdecl.print();
-        }else if (option == 4) {
+        } else if (option == 4) {
             funcdecl.print();
             declseq.print(indent);
         }

@@ -64,22 +64,23 @@ public class IdList {
             val.setCorevar(intOrRef, null);
         }
         // Check if we are currently in globalSpace
-        // If so we are only going to add Core, <String, Corevar> pair to corresponding globalSpace
+        // If so we are only going to add Core, <String, Corevar> pair to corresponding
+        // globalSpace
         // Otherwise, add to stackSpace's top stack's hashmap.
         HashMap<String, Corevar> correspondingMap = new HashMap<String, Corevar>();
         if (Memory.inGlobal) {
             correspondingMap = Memory.globalSpace;
-        }else{
+        } else {
             correspondingMap = Memory.stackSpace.peek().peek();
         }
 
-        if(!correspondingMap.containsKey(key)){
-            correspondingMap.put(key,val);
-        }else{
+        if (!correspondingMap.containsKey(key)) {
+            correspondingMap.put(key, val);
+        } else {
             Utility.DoubleDeclarationError(key);
             System.exit(-1);
         }
-        
+
         if (option == 2) {
             idlist.execute(intOrRef);
         }
@@ -87,7 +88,7 @@ public class IdList {
 
     public void print(int indent) {
         System.out.print(line + id);
-        if(option==2){
+        if (option == 2) {
             System.out.print(",");
             idlist.print(indent);
         }

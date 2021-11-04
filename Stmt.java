@@ -11,6 +11,7 @@ public class Stmt {
     Out out;
     Decl decl;
     Funccall funccall;
+
     Stmt() {
         option = 0;
         assign = null;
@@ -60,7 +61,7 @@ public class Stmt {
             decl.parse(S);
         }
         // Option 7: <stmt> ::= <func-call>
-        else if(S.currentToken() == Core.BEGIN){
+        else if (S.currentToken() == Core.BEGIN) {
             // System.out.println("option = 7");
             option = 7;
             funccall = new Funccall();
@@ -76,7 +77,8 @@ public class Stmt {
         // So if the current token != id or if or while or input or output or int/ref,
         // then syntax error
         else {
-            Core[] expectedones = new Core[] { Core.ID, Core.IF, Core.WHILE, Core.INPUT, Core.OUTPUT, Core.INT, Core.REF, Core.BEGIN };
+            Core[] expectedones = new Core[] { Core.ID, Core.IF, Core.WHILE, Core.INPUT, Core.OUTPUT, Core.INT,
+                    Core.REF, Core.BEGIN };
             Utility.errorhelper(expectedones, S.currentToken());
             System.exit(-1);
         }
@@ -111,7 +113,7 @@ public class Stmt {
             out.execute();
         } else if (option == 6) {
             decl.execute();
-        } else if(option == 7){
+        } else if (option == 7) {
             funccall.execute(inputScanner);
         }
     }
@@ -129,8 +131,8 @@ public class Stmt {
             out.print(indent);
         } else if (option == 6) {
             decl.print(indent);
-        } else if (option == 7){
-            funccall.print(); 
+        } else if (option == 7) {
+            funccall.print();
         }
 
     }
