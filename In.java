@@ -50,11 +50,14 @@ public class In {
 
     public void execute(Scanner inputScanner) {
         String key = id;
+        // System.out.println("In class: inputScanner tokens: "+ inputScanner.tokens);
         // Check if there's any available data left in the data file
         if (inputScanner.tokens.size() == 1) {
             Utility.InvalidInput();
             System.exit(-1);
         }
+        // Call currentToken first to set inputScanner.current = tokens[0]
+        inputScanner.currentToken();
         int num = inputScanner.getCONST();
         inputScanner.nextToken();
         Corevar val = new Corevar(Core.INT, num);
