@@ -83,16 +83,18 @@ public class Funccall {
                 if (m.containsKey(actualParam.get(i))){
                     inGlobal = false;
                     param = m.get(actualParam.get(i));
+                    
                 }
             }
             // Check globalSpace if the actual parameter does not exist in mainstack.
             // If not, actual parameter is not declared yet.
             if (inGlobal){
                 param = Memory.globalSpace.get(actualParam.get(i));
-            }else{
+            }else if(param.type == null){
                 Utility.UseUndeclaredIdError(id);
                 System.exit(-1);
             }
+            
             // After gathering key = formal parameter and value = corresponding actual parameter's Corevar, put the pair to funcSpace
             funcSpace.put(key, param);
         }
