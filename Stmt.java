@@ -23,7 +23,6 @@ public class Stmt {
     }
 
     public void parse(Scanner S) {
-        // System.out.println(S.currentToken());
         // Option 1: <stmt> ::= <assign>
         if (S.currentToken() == Core.ID) {
             option = 1;
@@ -66,8 +65,6 @@ public class Stmt {
             option = 7;
             funccall = new Funccall();
             funccall.parse(S);
-            // System.out.println("after funccall"+S.tokens);
-
         }
         // <assign> ::= id = <expr> ; | id = new ; | id = ref id ;
         // <if> ::= if <cond> then <stmt-seq> endif | if <cond> then <stmt-seq> else
@@ -102,7 +99,6 @@ public class Stmt {
     }
 
     public void execute(Scanner inputScanner) {
-        // System.out.println("Stmt class: option "+option);
         if (option == 1) {
             assign.execute();
         } else if (option == 2) {
@@ -116,7 +112,6 @@ public class Stmt {
         } else if (option == 6) {
             decl.execute();
         } else if(option == 7){
-            // System.out.println("Stmt class: Func call bout to start");
             funccall.execute(inputScanner);
         }
     }

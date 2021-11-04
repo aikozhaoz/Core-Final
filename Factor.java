@@ -79,12 +79,14 @@ public class Factor {
             String key = id;
             Corevar val = new Corevar();
             boolean keyInGlobal = true;
+            // Check if the current id(variable) exists in stack now. If not check global.
             for (HashMap<String, Corevar> currentscope : Memory.stackSpace.peek()) {
                 if (currentscope.containsKey(key)) {
                     keyInGlobal = false;
                     val = currentscope.get(key);
                 }
             }
+            // If the current id(variable) does not exist in neither current stack/global, it's not declared.
             if (keyInGlobal) {
                 if (Memory.globalSpace.containsKey(key)) {
                     val = Memory.globalSpace.get(key);

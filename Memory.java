@@ -8,8 +8,7 @@ public class Memory {
     public static ArrayList<Integer> heapSpace;
     public static boolean inGlobal;
 
-    // Make the constructor private so that this class cannot be instantiated
-    // outside of this class
+    // Make the constructor private so that this class cannot be instantiated outside of this class
     private Memory() {
         globalSpace = new HashMap<String, Corevar>();
         functionDeclaration = new HashMap<String, Funcdecl>();

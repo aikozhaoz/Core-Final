@@ -45,7 +45,6 @@ public class Funccall {
     }
 
     public void execute(Scanner inputScanner) {
-        // System.out.println("Funccall class: Function call starts");
         String funcName = id;
         // Check if function is declared before execution
         if(!Memory.functionDeclaration.containsKey(funcName)){
@@ -53,51 +52,59 @@ public class Funccall {
             System.exit(-1);
         }
 
-        // Get the corresponding function
+        // If the function is already declared. Get the corresponding function
         Funcdecl function = Memory.functionDeclaration.get(funcName);
 
         // Getting all the actual parameters.
         actualParam = new ArrayList<String>();
         formals.execute(actualParam);
+
         // Check if the amount of the formal parameters == the amount of the actual parameters.
+        // If not, unmatching function parameter error.
         if(function.formalParameters.size() != actualParam.size()){
             Utility.unmatchingFunctionParameter(funcName);
-            // System.out.println("Formal parameter size: "+function.formalParameters.size());
             System.exit(-1);
         }
-        // Create FuncSpace and get mainstack
-        HashMap<String, Corevar> funcSpace = new HashMap<String, Corevar>();
+
+        // Get mainstack so we can peek to get all the actual parameters' corresponding value.
         Stack<HashMap<String, Corevar>> mainstack = Memory.stackSpace.peek();
-        // System.out.println("Funccall class: 1st. actual parameter value: "+actualParam.get(0));
-        // System.out.println("Funccall class: 1st. formal parameter value: "+function.formalParameters.get(0));
+        // Create FuncSpace map
+        HashMap<String, Corevar> funcSpace = new HashMap<String, Corevar>();
+        
+        // Loop through the actual parameters[].
+        // Set up each formal parameter with the corresponding actual parameter's value.
+        // FuncSpace = {<formalparameter's id:actualparameter's val>}
         for(int i=0; i<actualParam.size(); i++){
             String key = function.formalParameters.get(i);
-            // System.out.println("Funccall class: ith. formal parameter: "+key);
             Corevar param = new Corevar();
             boolean inGlobal = true;
-            // System.out.println("actual parameter value: "+actualParam.get(i));
+            // Loop through mainstack's maps to get actual parameter's corresponding value.
             for (HashMap<String, Corevar> m: mainstack){
-                // System.out.println("actual parameter value: "+actualParam.get(i));
                 if (m.containsKey(actualParam.get(i))){
                     inGlobal = false;
-                    // param.setCorevar(Core.REF, m.get(actualParam.get(i)).value);
                     param = m.get(actualParam.get(i));
-                    // System.out.println("actual parameter value: "+actualParam.get(i));
                 }
             }
+            // Check globalSpace if the actual parameter does not exist in mainstack.
+            // If not, actual parameter is not declared yet.
             if (inGlobal){
-                // param.setCorevar(Core.REF, Memory.globalSpace.get(actualParam.get(i)).value);
                 param = Memory.globalSpace.get(actualParam.get(i));
+            }else{
+                Utility.UseUndeclaredIdError(id);
+                System.exit(-1);
             }
-            // System.out.println("formal parameter value: "+param.type);
+            // After gathering key = formal parameter and value = corresponding actual parameter's Corevar, put the pair to funcSpace
             funcSpace.put(key, param);
         }
+        // Allocate a funcstack frame for current function call.
         Stack<HashMap<String, Corevar>> funcstack = new Stack<HashMap<String, Corevar>>();
+        // Put funccall map into funcstack frame.
         funcstack.push(funcSpace);
+        // Put funcstack to stackSpace.
         Memory.stackSpace.push(funcstack);
-        // System.out.println("before execution");
-        // System.out.println("left id: " + Memory.stackSpace.peek().contains(funcName));
+        // Now execute function.
         function.getFunctionBody().execute(inputScanner);
+        // After funtion's execution, pop the function call from the stackSpace.
         Memory.stackSpace.pop();
     }
 

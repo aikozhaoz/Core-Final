@@ -26,22 +26,14 @@ public class If {
             Utility.expectedhelper(Core.IF, S.currentToken());
             System.exit(-1);
         }
-        // System.out.println(S.currentToken());
         cond = new Cond();
         cond.parse(S);
-        // System.out.println("Before: " + S.tokens);
         if (!S.expectedToken(Core.THEN)) {
             Utility.expectedhelper(Core.THEN, S.currentToken());
             System.exit(-1);
         }
-        // System.out.println("After: "+ S.tokens);
-        // System.out.println(S.getID());
-        // stmtseqone = new StmtSeq();
-        // System.out.println("Before stmtseqone: " + S.tokens);
-        // System.out.println();
         stmtseqone = new StmtSeq();
         stmtseqone.parse(S);
-        // System.out.println("After stmtseqone: "+ S.tokens);
         // This is where options diverge!
         // Option 1: <if> ::= if <cond> then <stmt-seq> endif
         if (S.currentToken() == Core.ENDIF) {

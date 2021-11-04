@@ -108,19 +108,16 @@ public class Assign {
     public void execute() {
         String leftkey = idone;
         String rightkey = idtwo;
-        // System.out.println("left key: " + leftkey);
         Corevar leftvar = new Corevar();
         Corevar rightvar = new Corevar();
         boolean leftvarInGlobal = true;
         boolean rightvarInGlobal = true;
         // First, loop through stackspace searching for Corevars that are
         // corresponding to leftkey and rightkey.
-        // System.out.println("found left key: " + Memory.stackSpace.peek().contains(leftkey));
         for (HashMap<String, Corevar> currentscope : Memory.stackSpace.peek()) {
             if (currentscope.containsKey(leftkey)) {
                 leftvarInGlobal = false;
                 leftvar = currentscope.get(leftkey);
-                // System.out.println("found left key ");
             }
             if (currentscope.containsKey(rightkey)) {
                 rightvarInGlobal = false;
@@ -136,7 +133,6 @@ public class Assign {
         }
         // Option 3: <assign> ::= id = <expr>;
         if (option == 3) {
-            // System.out.println("left key type: " + leftvar.type);
             int exprnum = expr.execute();
             if (leftvar.type == Core.INT) {
                 leftvar.setvalue(exprnum);

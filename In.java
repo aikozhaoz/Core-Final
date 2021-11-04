@@ -50,7 +50,6 @@ public class In {
 
     public void execute(Scanner inputScanner) {
         String key = id;
-        // System.out.println("In class: inputScanner tokens: "+ inputScanner.tokens);
         // Check if there's any available data left in the data file
         if (inputScanner.tokens.size() == 1) {
             Utility.InvalidInput();

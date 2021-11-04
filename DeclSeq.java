@@ -1,3 +1,4 @@
+import java.lang.reflect.Parameter;
 import java.util.*;
 
 public class DeclSeq {
@@ -31,6 +32,7 @@ public class DeclSeq {
                 declseq.parse(S);
             }
         }
+        // If the first token is ID, option = 3/4
         // Option 3: <decl-seq> ::= <func-decl>
         // Option 4: <decl-seq> ::= <func-decl><decl-seq>
         else if (S.currentToken() == Core.ID) {
@@ -65,19 +67,23 @@ public class DeclSeq {
             declseq.execute();
         } else if (option == 3) {
             // Check if function is already declared. If not then put the <funcName, funcdecl> onto functionDeclaration.
+            // Otherwise, duplicate function name error.
             if (!Memory.functionDeclaration.containsKey(funcName)){
                 Memory.functionDeclaration.put(funcName, funcdecl);
             }else{
                 Utility.DoubleDeclarationError(funcName);
             }
+            // Execute funcdecl to check if there is any duplicates in formal parameters.
             funcdecl.execute();
         } else if (option == 4) {
             // Check if function is already declared. If not then put the <funcName, funcdecl> onto functionDeclaration.
+            // Otherwise, duplicate function name error.
             if (!Memory.functionDeclaration.containsKey(funcName)){
                 Memory.functionDeclaration.put(funcName, funcdecl);
             }else{
                 Utility.DoubleDeclarationError(funcName);
             }
+            // Execute funcdecl to check if there is any duplicates in formal parameters.
             funcdecl.execute();
             declseq.execute();
         }

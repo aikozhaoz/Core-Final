@@ -53,14 +53,15 @@ public class Funcdecl {
     public void execute() {
         // Get all the formal parameters
         formals.execute(formalParameters);
-        // System.out.println("Funcdecl After formal calls: " + formalParameters);
-        // Check if there are duplicate parameter names
+        // Check if there are duplicate parameter names.
+        // If so out print duplicate formal parameter errors
         Set<String> parameters = new HashSet<String>(formalParameters);
         if(parameters.size() < formalParameters.size()){
             Utility.FunctionParameterDoubleDeclarationError();
             System.exit(-1);
         }
     }
+
     public StmtSeq getFunctionBody(){
         return stmtseq;
     }

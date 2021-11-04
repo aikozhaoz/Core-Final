@@ -18,7 +18,6 @@ public class StmtSeq {
         option = 1;
         stmt = new Stmt();
         stmt.parse(S);
-        // System.out.println("after stmt"+S.tokens);
         // Option 2: <stmt-seq> ::= <stmt><stmt-seq>
         // If the current token != Core.END, continue parsing stmtseq.
         Core[] expectedones = new Core[] { Core.ID, Core.IF, Core.WHILE, Core.INPUT, Core.OUTPUT, Core.INT, Core.REF, Core.BEGIN };
