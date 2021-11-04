@@ -48,21 +48,24 @@ public class In {
         }
     }
 
-    public void execute(Memory memory, Scanner inputScanner) {
+    public void execute(Scanner inputScanner) {
         String key = id;
         // Check if there's any available data left in the data file
         if (inputScanner.tokens.size() == 1) {
             Utility.InvalidInput();
             System.exit(-1);
         }
-        Core currentToken = inputScanner.currentToken();
         int num = inputScanner.getCONST();
         inputScanner.nextToken();
         Corevar val = new Corevar(Core.INT, num);
-        Stack<HashMap<String, Corevar>> stackSpace = Memory.stackSpace;
-        HashMap<String, Corevar> currentscope = stackSpace.pop();
+        HashMap<String, Corevar> currentscope = Memory.stackSpace.peek().peek();
         currentscope.put(key, val);
-        stackSpace.push(currentscope);
     }
 
+    public void print(int indent) {
+        for (int i = 0; i < indent; i++) {
+            line += "  ";
+        }
+        System.out.println(line + "input " + id + ";");
+    }
 }

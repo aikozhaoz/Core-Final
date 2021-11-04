@@ -21,7 +21,7 @@ public class StmtSeq {
         // System.out.println("after stmt"+S.tokens);
         // Option 2: <stmt-seq> ::= <stmt><stmt-seq>
         // If the current token != Core.END, continue parsing stmtseq.
-        Core[] expectedones = new Core[] { Core.ID, Core.IF, Core.WHILE, Core.INPUT, Core.OUTPUT, Core.INT, Core.REF };
+        Core[] expectedones = new Core[] { Core.ID, Core.IF, Core.WHILE, Core.INPUT, Core.OUTPUT, Core.INT, Core.REF, Core.BEGIN };
         if (Utility.checkIfTokenIsExpected(expectedones, S.currentToken())) {
             option = 2;
             stmtseq = new StmtSeq();
@@ -36,10 +36,17 @@ public class StmtSeq {
         }
     }
 
-    public void execute(Memory memory, Scanner inputScanner) {
-        stmt.execute(memory, inputScanner);
+    public void execute(Scanner inputScanner) {
+        stmt.execute(inputScanner);
         if (option == 2) {
-            stmtseq.execute(memory, inputScanner);
+            stmtseq.execute(inputScanner);
+        }
+    }
+
+    public void print(int indent) {
+        stmt.print(indent);
+        if (option == 2) {
+            stmtseq.print(indent);
         }
     }
 

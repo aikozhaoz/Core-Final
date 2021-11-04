@@ -49,10 +49,10 @@ public class Cmpr {
         exprtwo.semantic(scopetrack);
     }
 
-    public boolean execute(Memory memory) {
+    public boolean execute() {
         boolean condition = true;
-        int exprOne = exprone.execute(memory);
-        int exprTwo = exprtwo.execute(memory);
+        int exprOne = exprone.execute();
+        int exprTwo = exprtwo.execute();
         if (option == 1) {
             condition = (exprOne == exprTwo);
         } else if (option == 2) {
@@ -61,6 +61,18 @@ public class Cmpr {
             condition = (exprOne <= exprTwo);
         }
         return condition;
+    }
+
+    public void print(int indent) {
+        exprone.print(indent);
+        if (option == 1) {
+            System.out.print("==");
+        } else if (option == 2) {
+            System.out.print("<");
+        } else if (option == 3) {
+            System.out.print("<=");
+        }
+        exprtwo.print(indent);
     }
 
 }

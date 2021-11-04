@@ -68,17 +68,31 @@ public class Cond {
         }
     }
 
-    public boolean execute(Memory memory) {
+    public boolean execute() {
         boolean condition = true;
         if (option == 2) {
             // System.out.println("secondwhileloop condition!!!");
-            condition = cmpr.execute(memory);
+            condition = cmpr.execute();
         } else if (option == 1) {
-            condition = !(cond.execute(memory));
+            condition = !(cond.execute());
         } else if (option == 3) {
-            condition = (cmpr.execute(memory)) || (cond.execute(memory));
+            condition = (cmpr.execute()) || (cond.execute());
         }
         return condition;
+    }
+
+    public void print(int indent) {
+        if (option == 1) {
+            System.out.print("!(");
+            cond.print(indent);
+            System.out.print(")");
+        } else if (option == 2) {
+            cmpr.print(indent);
+        } else if (option == 3) {
+            cmpr.print(indent);
+            System.out.print(" or ");
+            cond.print(indent);
+        }
     }
 
 }

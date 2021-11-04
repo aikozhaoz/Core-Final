@@ -45,6 +45,11 @@ public class Utility {
         System.out.println("The current ID is already declared within the same scope: " + id);
     }
 
+    public static void FunctionParameterDoubleDeclarationError() {
+        System.out.println("Semantic Error! ");
+        System.out.println("Double declaration on functions' parameters");
+    }
+
     public static void UseUndeclaredIdError(String id) {
         System.out.println("Semantic Error! ");
         System.out.println("The current ID has not been declared yet! " + id);

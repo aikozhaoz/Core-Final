@@ -5,11 +5,13 @@ public class Funcdecl {
     String id;
     Formals formals;
     StmtSeq stmtseq;
+    ArrayList<String> formalParameters;
 
     Funcdecl(){
         id = "";
         formals = null;
         stmtseq = null;
+        formalParameters = null;
     }
 
     public void parse(Scanner S) {
@@ -41,11 +43,40 @@ public class Funcdecl {
 
         stmtseq = new StmtSeq();
         stmtseq.parse(S);
-        
+
         if (!S.expectedToken(Core.ENDFUNC)) {
             Utility.expectedhelper(Core.ENDFUNC, S.currentToken());
             System.exit(-1);
         }
+    }
+
+    public void execute(Scanner inputScanner) {
+        String key = id;
+        // Get all the formal parameters
+        formalParameters = new ArrayList<String>();
+        formals.execute(formalParameters);
+        // Check if there are duplicate parameter names
+        Set<String> parameters = new HashSet<String>(formalParameters);
+        if(parameters.size() < formalParameters.size()){
+            Utility.FunctionParameterDoubleDeclarationError();
+            System.exit(-1);
+        }
+
+        stmtseq.execute(inputScanner);
+        
+        // formals.execute();
+        // stmtseq.execute();
+    }
+    public Formals getFormals(){
+        return formals;
+    }
+
+    public void print(){
+        System.out.print(id+" ( ref ");
+        formals.print();
+        System.out.print(" ) begin ");
+        stmtseq.print(0);
+        System.out.println(" endfunc ");
     }
 
 }

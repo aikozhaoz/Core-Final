@@ -42,12 +42,19 @@ public class Decl {
         }
     }
 
-    public void execute(Memory memory) {
+    public void execute() {
         if (option == 1) {
-            declint.execute(memory);
+            declint.execute();
         } else if (option == 2) {
-            declclass.execute(memory);
+            declclass.execute();
         }
     }
 
+    public void print(int indent) {
+        if (option == 1) {
+            declint.print(indent);
+        } else if (option == 2) {
+            declclass.print(indent);
+        }
+    }
 }

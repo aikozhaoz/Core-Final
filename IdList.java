@@ -1,16 +1,16 @@
 import java.util.*;
 
-import jdk.jshell.execution.Util;
-
 public class IdList {
 
     int option;
     String id;
     IdList idlist;
+    String line;
 
     IdList() {
         option = 0;
         id = "";
+        line = "";
         idlist = null;
     }
 
@@ -33,7 +33,7 @@ public class IdList {
         }
     }
 
-    public void semantic(Stack<Map<String, Core>> scopetrack, Core idorclass) {
+    public void semantic(Stack<Map<String, Core>> scopetrack, Core intOrRef) {
         // Pop off the current scope from the stack
         Map<String, Core> currentscope = scopetrack.pop();
         String key = id;
@@ -44,41 +44,52 @@ public class IdList {
             Utility.DoubleDeclarationError(key);
             System.exit(-1);
         }
-        // If not, add <ID, idorclass> to currentscope
+        // If not, add <ID, intOrRef> to currentscope
         // Put currentscope back to stack
         else {
-            currentscope.put(key, idorclass);
+            currentscope.put(key, intOrRef);
             scopetrack.add(currentscope);
         }
         if (option == 2) {
-            idlist.semantic(scopetrack, idorclass);
+            idlist.semantic(scopetrack, intOrRef);
         }
     }
 
-    public void execute(Memory memory, Core idorclass) {
+    public void execute(Core intOrRef) {
         String key = id;
-        HashMap<String, Corevar> currentscope = new HashMap<String, Corevar>();
-        // Check if we are currently in globalSpace
-        // If so we are only going to add String, Corevar pair to globalSpace
-        // Otherwise, add to stack.
-        if (memory.inGlobal) {
-            currentscope = memory.globalSpace;
-        } else {
-            currentscope = memory.stackSpace.pop();
-        }
         Corevar val = new Corevar();
-        if (idorclass == Core.INT) {
-            val.setCorevar(idorclass, 0);
-        } else if (idorclass == Core.REF) {
-            val.setCorevar(idorclass, null);
+        if (intOrRef == Core.INT) {
+            val.setCorevar(intOrRef, 0);
+        } else if (intOrRef == Core.REF) {
+            val.setCorevar(intOrRef, null);
         }
-        currentscope.put(key, val);
-        if (!memory.inGlobal) {
-            memory.stackSpace.add(currentscope);
+        // Check if we are currently in globalSpace
+        // If so we are only going to add Core, <String, Corevar> pair to corresponding globalSpace
+        // Otherwise, add to stackSpace's top stack's hashmap.
+        HashMap<String, Corevar> correspondingMap = new HashMap<String, Corevar>();
+        if (Memory.inGlobal) {
+            correspondingMap = Memory.globalSpace;
+        }else{
+            correspondingMap = Memory.stackSpace.peek().peek();
         }
+
+        if(!correspondingMap.containsKey(key)){
+            correspondingMap.put(key,val);
+        }else{
+            Utility.DoubleDeclarationError(key);
+            System.exit(-1);
+        }
+        
         if (option == 2) {
-            idlist.execute(memory, idorclass);
+            idlist.execute(intOrRef);
         }
     }
 
+    public void print(int indent) {
+        System.out.print(line + id);
+        if(option==2){
+            System.out.print(",");
+            idlist.print(indent);
+        }
+    }
 }

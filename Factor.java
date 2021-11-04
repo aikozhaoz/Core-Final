@@ -71,33 +71,49 @@ public class Factor {
         }
     }
 
-    public int execute(Memory memory) {
-        int result = -1;
+    public int execute() {
+        int result = Integer.MIN_VALUE;
         if (option == 2) {
             result = cons;
         } else if (option == 1) {
             String key = id;
             Corevar val = new Corevar();
             boolean keyInGlobal = true;
-            for (HashMap<String, Corevar> currentscope : memory.stackSpace) {
+            for (HashMap<String, Corevar> currentscope : Memory.stackSpace.peek()) {
                 if (currentscope.containsKey(key)) {
                     keyInGlobal = false;
                     val = currentscope.get(key);
                 }
             }
             if (keyInGlobal) {
-                if (memory.globalSpace.containsKey(key)) {
-                    val = memory.globalSpace.get(key);
+                if (Memory.globalSpace.containsKey(key)) {
+                    val = Memory.globalSpace.get(key);
+                }else{
+                    Utility.UseUndeclaredIdError(key);
+                    System.exit(-1);
                 }
             }
             if (val.type == Core.INT) {
                 result = val.value;
             } else if (val.type == Core.REF) {
-                result = memory.heapSpace.get(val.value);
+                result = Memory.heapSpace.get(val.value);
             }
         } else if (option == 3) {
-            result = expr.execute(memory);
+            result = expr.execute();
         }
         return result;
+    }
+
+    public void print(int indent) {
+        if (option == 1) {
+            System.out.print(id);
+        } else if (option == 2) {
+            System.out.print(cons);
+        }
+        if (option == 3) {
+            System.out.print("(");
+            expr.print(indent);
+            System.out.print(")");
+        }
     }
 }

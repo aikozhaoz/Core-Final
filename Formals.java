@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Formals {
     
     int option;
@@ -26,6 +28,21 @@ public class Formals {
             S.expectedToken(Core.COMMA);
             formals = new Formals();
             formals.parse(S);
+        }
+    }
+
+    public void execute(ArrayList<String> parameters) {
+        parameters.add(id);
+        if (option == 2){
+            formals.execute(parameters);
+        }
+    }
+
+    public void print(){
+        System.out.print(id);
+        if (option == 2){
+            System.out.print(", ");
+            formals.print();
         }
     }
 }

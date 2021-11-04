@@ -79,33 +79,53 @@ public class If {
         }
     }
 
-    public void execute(Memory memory, Scanner inputScanner) {
-        boolean condition = cond.execute(memory);
+    public void execute(Scanner inputScanner) {
+        boolean condition = cond.execute();
         if (option == 1) {
             if (condition) {
                 // Enter a new scope
                 HashMap<String, Corevar> scopeone = new HashMap<>();
-                memory.stackSpace.push(scopeone);
-                stmtseqone.execute(memory, inputScanner);
+                Memory.stackSpace.peek().push(scopeone);
+                stmtseqone.execute(inputScanner);
                 // End scope
-                memory.stackSpace.pop();
+                Memory.stackSpace.peek().pop();
             }
         } else if (option == 2) {
             if (condition) {
                 // Enter a new scope
                 HashMap<String, Corevar> scopeone = new HashMap<>();
-                memory.stackSpace.push(scopeone);
-                stmtseqone.execute(memory, inputScanner);
+                Memory.stackSpace.peek().push(scopeone);
+                stmtseqone.execute(inputScanner);
                 // End scope
-                memory.stackSpace.pop();
+                Memory.stackSpace.peek().pop();
             } else {
                 // Enter a new scope
                 HashMap<String, Corevar> scopetwo = new HashMap<>();
-                memory.stackSpace.push(scopetwo);
-                stmtseqtwo.execute(memory, inputScanner);
+                Memory.stackSpace.peek().push(scopetwo);
+                stmtseqtwo.execute(inputScanner);
                 // End scope
-                memory.stackSpace.pop();
+                Memory.stackSpace.peek().pop();
             }
         }
+    }
+
+    public void print(int indent) {
+        for (int i = 0; i < indent; i++) {
+            line += "  ";
+        }
+        System.out.print(line + "if ");
+        cond.print(indent);
+        System.out.println(" then");
+        indent++;
+        if (option == 1) {
+            stmtseqone.print(indent);
+            System.out.println(line + "endif");
+        } else if (option == 2) {
+            stmtseqone.print(indent);
+            System.out.println(line + "else");
+            stmtseqtwo.print(indent);
+            System.out.println(line + "endif");
+        }
+
     }
 }

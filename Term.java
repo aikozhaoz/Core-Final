@@ -37,16 +37,24 @@ public class Term {
         }
     }
 
-    public int execute(Memory memory) {
-        int result = -1;
-        int factornum = factor.execute(memory);
+    public int execute() {
+        int result = Integer.MIN_VALUE;
+        int factornum = factor.execute();
         if (option == 1) {
             result = factornum;
         } else if (option == 2) {
-            int termnum = term.execute(memory);
+            int termnum = term.execute();
             result = factornum * termnum;
         }
         return result;
+    }
+
+    public void print(int indent) {
+        factor.print(indent);
+        if (option == 2) {
+            System.out.print("*");
+            term.print(indent);
+        }
     }
 
 }

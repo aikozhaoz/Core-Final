@@ -45,14 +45,14 @@ public class Expr {
         }
     }
 
-    public int execute(Memory memory) {
-        int result = -1;
-        int termnum = term.execute(memory);
-        ;
+    public int execute() {
+        int result = Integer.MIN_VALUE;
+        int termnum = term.execute();
+        
         if (option == 1) {
             result = termnum;
         } else {
-            int exprnum = expr.execute(memory);
+            int exprnum = expr.execute();
             if (option == 2) {
                 result = termnum + exprnum;
             } else if (option == 3) {
@@ -62,4 +62,14 @@ public class Expr {
         return result;
     }
 
+    public void print(int indent) {
+        term.print(indent);
+        if (option == 2) {
+            System.out.print("+");
+            expr.print(indent);
+        } else if (option == 3) {
+            System.out.print("-");
+            expr.print(indent);
+        }
+    }
 }

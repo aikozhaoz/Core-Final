@@ -3,7 +3,8 @@ import java.util.*;
 // Using Singleton pattern since we only need ONE memory obj
 public class Memory {
     public static HashMap<String, Corevar> globalSpace;
-    public static Stack<HashMap<String, Corevar>> stackSpace;
+    public static HashMap<String, Funcdecl> functionDeclaration;
+    public static Stack<Stack<HashMap<String, Corevar>>> stackSpace;
     public static ArrayList<Integer> heapSpace;
     public static boolean inGlobal;
 
@@ -11,9 +12,8 @@ public class Memory {
     // outside of this class
     private Memory() {
         globalSpace = new HashMap<String, Corevar>();
-        stackSpace = new Stack<HashMap<String, Corevar>>();
-        HashMap<String, Corevar> basesapce = new HashMap<String, Corevar>();
-        stackSpace.push(basesapce);
+        functionDeclaration = new HashMap<String, Funcdecl>();
+        stackSpace = new Stack<Stack<HashMap<String, Corevar>>>();
         heapSpace = new ArrayList<Integer>();
     }
 
@@ -24,4 +24,5 @@ public class Memory {
     public static Memory getMemory() {
         return memory;
     }
+
 }

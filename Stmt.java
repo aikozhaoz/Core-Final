@@ -23,6 +23,7 @@ public class Stmt {
     }
 
     public void parse(Scanner S) {
+        // System.out.println(S.currentToken());
         // Option 1: <stmt> ::= <assign>
         if (S.currentToken() == Core.ID) {
             option = 1;
@@ -59,11 +60,13 @@ public class Stmt {
             decl = new Decl();
             decl.parse(S);
         }
-        // Option 6: <stmt> ::= <func-call>
+        // Option 7: <stmt> ::= <func-call>
         else if(S.currentToken() == Core.BEGIN){
+            // System.out.println("option = 7");
             option = 7;
             funccall = new Funccall();
             funccall.parse(S);
+            // System.out.println("after funccall"+S.tokens);
 
         }
         // <assign> ::= id = <expr> ; | id = new ; | id = ref id ;
@@ -98,20 +101,39 @@ public class Stmt {
         }
     }
 
-    public void execute(Memory memory, Scanner inputScanner) {
+    public void execute(Scanner inputScanner) {
         if (option == 1) {
-            assign.execute(memory);
+            assign.execute();
         } else if (option == 2) {
-            ifobj.execute(memory, inputScanner);
+            ifobj.execute(inputScanner);
         } else if (option == 3) {
-            loop.execute(memory, inputScanner);
+            loop.execute(inputScanner);
         } else if (option == 4) {
-            in.execute(memory, inputScanner);
+            in.execute(inputScanner);
         } else if (option == 5) {
-            out.execute(memory);
+            out.execute();
         } else if (option == 6) {
-            decl.execute(memory);
+            decl.execute();
         }
+    }
+
+    public void print(int indent) {
+        if (option == 1) {
+            assign.print(indent);
+        } else if (option == 2) {
+            ifobj.print(indent);
+        } else if (option == 3) {
+            loop.print(indent);
+        } else if (option == 4) {
+            in.print(indent);
+        } else if (option == 5) {
+            out.print(indent);
+        } else if (option == 6) {
+            decl.print(indent);
+        } else if (option == 7){
+            funccall.print(); 
+        }
+
     }
 
 }

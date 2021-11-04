@@ -40,8 +40,17 @@ public class Out {
         expr.semantic(scopetrack);
     }
 
-    public void execute(Memory memory) {
-        int exprnum = expr.execute(memory);
+    public void execute() {
+        int exprnum = expr.execute();
         System.out.println(exprnum);
+    }
+
+    public void print(int indent) {
+        for (int i = 0; i < indent; i++) {
+            line += "  ";
+        }
+        System.out.print(line + "output ");
+        expr.print(indent);
+        System.out.println(";");
     }
 }

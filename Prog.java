@@ -59,14 +59,27 @@ public class Prog {
     }
 
     public void execute(Scanner inputScanner) {
-        Memory memory = Memory.getMemory();
         // Option 1: <prog> ::= program <decl-seq> begin <stmt-seq> end
         if (declseq != null) {
-            memory.inGlobal = true;
-            declseq.execute(memory);
+            Memory.inGlobal = true;
+            declseq.execute();
         }
-        memory.inGlobal = false;
+
+        Memory.inGlobal = false;
+        Stack<HashMap<String, Corevar>> basesapce = new Stack<HashMap<String, Corevar>>();
+        Memory.stackSpace.push(basesapce);
         // Option 2: <prog> ::= program begin <stmt-seq> end
-        stmtseq.execute(memory, inputScanner);
+        stmtseq.execute(inputScanner);
+        Memory.stackSpace.pop();
+    }
+
+    public void print(int indent) {
+        System.out.println("program");
+        if (option == 2) {
+            declseq.print(indent);
+        }
+        System.out.println("begin");
+        stmtseq.print(indent);
+        System.out.println("end");
     }
 }

@@ -3,14 +3,15 @@ import java.util.*;
 public class DeclSeq {
 
     int option;
+    String funcName;
 
     Decl decl;
     DeclSeq declseq;
     Funcdecl funcdecl;
 
-
     DeclSeq() {
         option = 0;
+        funcName = "";
         decl = null;
         declseq = null;
         funcdecl = null;
@@ -24,7 +25,7 @@ public class DeclSeq {
             option = 1;
             decl = new Decl();
             decl.parse(S);
-            if (S.currentToken() != Core.BEGIN){
+            if (S.currentToken() != Core.BEGIN) {
                 option = 2;
                 declseq = new DeclSeq();
                 declseq.parse(S);
@@ -34,14 +35,15 @@ public class DeclSeq {
         // Option 4: <decl-seq> ::= <func-decl><decl-seq>
         else if (S.currentToken() == Core.ID) {
             option = 3;
+            funcName = S.getID();
             funcdecl = new Funcdecl();
             funcdecl.parse(S);
-            if (S.currentToken() != Core.BEGIN){
+            if (S.currentToken() != Core.BEGIN) {
                 option = 4;
                 declseq = new DeclSeq();
                 declseq.parse(S);
             }
-        }else{
+        } else {
             Core[] expectedones = new Core[] { Core.ID, Core.INT, Core.REF };
             Utility.errorhelper(expectedones, S.currentToken());
             System.exit(-1);
@@ -55,11 +57,44 @@ public class DeclSeq {
         }
     }
 
-    public void execute(Memory memory) {
-        decl.execute(memory);
-        if (option == 2) {
-            declseq.execute(memory);
+    public void execute() {
+        if (option == 1) {
+            decl.execute();
+        } else if (option == 2) {
+            decl.execute();
+            declseq.execute();
+        } else if (option == 3) {
+            if (!Memory.functionDeclaration.containsKey(funcName)){
+                Memory.functionDeclaration.put(funcName, funcdecl);
+            }else{
+                Utility.DoubleDeclarationError(funcName);
+            }
+            // funcdecl.execute();
+        } else if (option == 4) {
+            if (!Memory.functionDeclaration.containsKey(funcName)){
+                Memory.functionDeclaration.put(funcName, funcdecl);
+            }else{
+                Utility.DoubleDeclarationError(funcName);
+            }
+            // funcdecl.execute();
+            declseq.execute();
         }
     }
 
+    public void print(int indent) {
+        // System.out.println("print declseq"+option);
+        if(option == 1){
+            decl.print(indent);
+        }
+        else if (option == 2) {
+            decl.print(indent);
+            declseq.print(indent);
+        }else if (option == 3) {
+            // System.out.print("option =3");
+            funcdecl.print();
+        }else if (option == 4) {
+            funcdecl.print();
+            declseq.print(indent);
+        }
+    }
 }

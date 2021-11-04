@@ -29,8 +29,16 @@ public class DeclClass {
         idlist.semantic(scopetrack, Core.REF);
     }
 
-    public void execute(Memory memory) {
-        idlist.execute(memory, Core.REF);
+    public void execute() {
+        idlist.execute(Core.REF);
     }
 
+    public void print(int indent) {
+        for (int i = 0; i < indent; i++) {
+            line += "  ";
+        }
+        System.out.print(line + "ref ");
+        idlist.print(indent);
+        System.out.println(";");
+    }
 }

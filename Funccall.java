@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Funccall {
 
     String id;
@@ -35,5 +37,26 @@ public class Funccall {
             Utility.expectedhelper(Core.RPAREN, S.currentToken());
             System.exit(-1);
         }
+        if (!S.expectedToken(Core.SEMICOLON)) {
+            Utility.expectedhelper(Core.SEMICOLON, S.currentToken());
+            System.exit(-1);
+        }
+    }
+
+    public void execute() {
+        Funcdecl function = Memory.functionDeclaration.get(id);
+        // Formals formalParameters = function.getFormals();
+        // for (x:formals){
+
+        // }
+        
+        Stack<HashMap<String, Corevar>> funcstack = new Stack<HashMap<String, Corevar>>();
+
+    }
+
+    public void print(){
+        System.out.print("begin "+id+" ( ");
+        formals.print();
+        System.out.print(" );");
     }
 }

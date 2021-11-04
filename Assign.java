@@ -1,6 +1,5 @@
 import java.util.*;
 
-import jdk.jshell.execution.Util;
 
 public class Assign {
 
@@ -106,16 +105,16 @@ public class Assign {
         }
     }
 
-    public void execute(Memory memory) {
+    public void execute() {
         String leftkey = idone;
         String rightkey = idtwo;
         Corevar leftvar = new Corevar();
         Corevar rightvar = new Corevar();
         boolean leftvarInGlobal = true;
         boolean rightvarInGlobal = true;
-        // Loop through both stackspace first searching for Corevars that are
+        // First, loop through stackspace searching for Corevars that are
         // corresponding to leftkey and rightkey.
-        for (HashMap<String, Corevar> currentscope : memory.stackSpace) {
+        for (HashMap<String, Corevar> currentscope : Memory.stackSpace.peek()) {
             if (currentscope.containsKey(leftkey)) {
                 leftvarInGlobal = false;
                 leftvar = currentscope.get(leftkey);
@@ -127,14 +126,14 @@ public class Assign {
         }
         // If any of them is not found in stack, search in global.
         if (leftvarInGlobal) {
-            leftvar = memory.globalSpace.get(leftkey);
+            leftvar = Memory.globalSpace.get(leftkey);
         }
         if (rightvarInGlobal) {
-            rightvar = memory.globalSpace.get(rightkey);
+            rightvar = Memory.globalSpace.get(rightkey);
         }
         // Option 3: <assign> ::= id = <expr>;
         if (option == 3) {
-            int exprnum = expr.execute(memory);
+            int exprnum = expr.execute();
             if (leftvar.type == Core.INT) {
                 leftvar.setvalue(exprnum);
             } else if (leftvar.type == Core.REF) {
@@ -145,14 +144,14 @@ public class Assign {
                     Utility.refIndexNull();
                     System.exit(-1);
                 }
-                memory.heapSpace.set(leftvar.value, exprnum);
+                Memory.heapSpace.set(leftvar.value, exprnum);
             }
         }
         // Option 1: <assign> ::= id = new;
         else if (option == 1) {
             if (leftvar.type == Core.REF) {
-                memory.heapSpace.add(leftvar.value);
-                leftvar.value = memory.heapSpace.size() - 1;
+                Memory.heapSpace.add(leftvar.value);
+                leftvar.value = Memory.heapSpace.size() - 1;
             }
         }
         // Option 2: <assign> ::= id = ref id;
@@ -160,6 +159,21 @@ public class Assign {
             if (leftvar.type == Core.REF && rightvar.type == Core.REF) {
                 leftvar.value = rightvar.value;
             }
+        }
+    }
+
+    public void print(int indent) {
+        for (int i = 0; i < indent; i++) {
+            line += "  ";
+        }
+        System.out.print(line + idone + "=");
+        if (option == 1) {
+            System.out.println("new;");
+        } else if (option == 2) {
+            System.out.println("ref " + idtwo + ";");
+        } else if (option == 3) {
+            expr.print(indent);
+            System.out.println(";");
         }
     }
 }
