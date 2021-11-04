@@ -66,7 +66,9 @@ public class Prog {
         }
 
         Memory.inGlobal = false;
+        HashMap<String, Corevar> basemap = new HashMap<String, Corevar>();
         Stack<HashMap<String, Corevar>> basesapce = new Stack<HashMap<String, Corevar>>();
+        basesapce.push(basemap);
         Memory.stackSpace.push(basesapce);
         // Option 2: <prog> ::= program begin <stmt-seq> end
         stmtseq.execute(inputScanner);

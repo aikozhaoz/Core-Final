@@ -11,7 +11,7 @@ public class Funcdecl {
         id = "";
         formals = null;
         stmtseq = null;
-        formalParameters = null;
+        formalParameters = new ArrayList<String>();
     }
 
     public void parse(Scanner S) {
@@ -50,21 +50,16 @@ public class Funcdecl {
         }
     }
 
-    public void execute(Scanner inputScanner) {
+    public void execute() {
         // Get all the formal parameters
-        formalParameters = new ArrayList<String>();
         formals.execute(formalParameters);
+        // System.out.println("Funcdecl After formal calls: " + formalParameters);
         // Check if there are duplicate parameter names
         Set<String> parameters = new HashSet<String>(formalParameters);
         if(parameters.size() < formalParameters.size()){
             Utility.FunctionParameterDoubleDeclarationError();
             System.exit(-1);
         }
-
-        stmtseq.execute(inputScanner);
-        
-        // formals.execute();
-        // stmtseq.execute();
     }
     public StmtSeq getFunctionBody(){
         return stmtseq;

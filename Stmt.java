@@ -102,6 +102,7 @@ public class Stmt {
     }
 
     public void execute(Scanner inputScanner) {
+        // System.out.println("Stmt class: option "+option);
         if (option == 1) {
             assign.execute();
         } else if (option == 2) {
@@ -114,6 +115,9 @@ public class Stmt {
             out.execute();
         } else if (option == 6) {
             decl.execute();
+        } else if(option == 7){
+            // System.out.println("Stmt class: Func call bout to start");
+            funccall.execute(inputScanner);
         }
     }
 

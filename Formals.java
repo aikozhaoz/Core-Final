@@ -32,7 +32,9 @@ public class Formals {
     }
 
     public void execute(ArrayList<String> parameters) {
+        // System.out.println("Formal class: Right before formal calls: " + parameters);
         parameters.add(id);
+        // System.out.println("Formal class: Right after formal calls: " + parameters);
         if (option == 2){
             formals.execute(parameters);
         }

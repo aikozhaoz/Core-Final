@@ -70,7 +70,7 @@ public class DeclSeq {
             }else{
                 Utility.DoubleDeclarationError(funcName);
             }
-            // funcdecl.execute();
+            funcdecl.execute();
         } else if (option == 4) {
             // Check if function is already declared. If not then put the <funcName, funcdecl> onto functionDeclaration.
             if (!Memory.functionDeclaration.containsKey(funcName)){
@@ -78,7 +78,7 @@ public class DeclSeq {
             }else{
                 Utility.DoubleDeclarationError(funcName);
             }
-            // funcdecl.execute();
+            funcdecl.execute();
             declseq.execute();
         }
     }
