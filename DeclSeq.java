@@ -64,6 +64,7 @@ public class DeclSeq {
             decl.execute();
             declseq.execute();
         } else if (option == 3) {
+            // Check if function is already declared. If not then put the <funcName, funcdecl> onto functionDeclaration.
             if (!Memory.functionDeclaration.containsKey(funcName)){
                 Memory.functionDeclaration.put(funcName, funcdecl);
             }else{
@@ -71,6 +72,7 @@ public class DeclSeq {
             }
             // funcdecl.execute();
         } else if (option == 4) {
+            // Check if function is already declared. If not then put the <funcName, funcdecl> onto functionDeclaration.
             if (!Memory.functionDeclaration.containsKey(funcName)){
                 Memory.functionDeclaration.put(funcName, funcdecl);
             }else{

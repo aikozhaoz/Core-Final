@@ -51,7 +51,6 @@ public class Funcdecl {
     }
 
     public void execute(Scanner inputScanner) {
-        String key = id;
         // Get all the formal parameters
         formalParameters = new ArrayList<String>();
         formals.execute(formalParameters);
@@ -67,8 +66,8 @@ public class Funcdecl {
         // formals.execute();
         // stmtseq.execute();
     }
-    public Formals getFormals(){
-        return formals;
+    public StmtSeq getFunctionBody(){
+        return stmtseq;
     }
 
     public void print(){
