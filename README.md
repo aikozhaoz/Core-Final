@@ -78,7 +78,7 @@
     * Value: int --> the actual int value | ref --> the pointer
 
 ### Grammar classes:
-![Core grammar](Core%20Function%20Calls/core-grammar.pdf)
+![Core grammar](Core%20Function%20Calls/core_grammar.pdf)
 
 
 
